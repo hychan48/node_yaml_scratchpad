@@ -91,7 +91,25 @@ const yamlFile = `---
      count: 1
      location: "a pear tree"
    turtle-doves: two`
+const yamlFileLines =  `---
+ two: 2
+ three: 3
+ four: 4
+ five: 5
+ six: 6
+ seven: # 7
+   - 8
+   - 9
+   - 10
+   - 11
+ twelve: #12
+   thirteen: 13
+   # 14 comment
+   fifteen: #15
+     sixteen: 16
+     seventeen: "17"
 
+   ninteen: 19`
 
 /**
  * https://yarnpkg.com/package/yaml
@@ -110,6 +128,32 @@ describe('yamlParser', function(){
     console.log(out);
 
   });
+
+  it('lexer yamlParser',function(){
+    let str;
+    // str = yamlFile
+    str = yamlFileLines
+    const lineCounter = new LineCounter()
+    // lineCounter.lineStarts // returns line start offsets?
+    const parser = new Parser(lineCounter.addNewLine)
+    // for (const token of new Parser().parse(str)){
+    for (const token of parser.parse(str)){
+      // console.dir(token, { depth: null })
+      // console.log(token); //token is one yaml document
+      // continue;
+      for (let i = 0; i < token.value.items.length; i++) {
+        const item = token.value.items[i];
+        // console.log(item);
+        const {key} = item
+        const {source,offset} = key;
+        const {line, col} = lineCounter.linePos(offset);
+        console.log({source,line,col});
+
+      }
+    }
+
+
+  })
 
   /**
    * https://github.com/eemeli/yaml/blob/master/docs/07_parsing_yaml.md
