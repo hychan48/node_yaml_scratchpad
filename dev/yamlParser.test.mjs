@@ -100,8 +100,8 @@ const yamlFileLines =  `---
  seven: # 7
    - 8
    - 9
-   - 10
-   - 11
+   - 10:
+    - 11
  twelve: #12
    thirteen: 13
    # 14 comment
@@ -109,7 +109,9 @@ const yamlFileLines =  `---
      sixteen: 16
      seventeen: "17"
 
-   ninteen: 19`
+   nineteen: 19
+ twenty: 20`
+
 
 /**
  * https://yarnpkg.com/package/yaml
@@ -137,17 +139,27 @@ describe('yamlParser', function(){
     // lineCounter.lineStarts // returns line start offsets?
     const parser = new Parser(lineCounter.addNewLine)
     // for (const token of new Parser().parse(str)){
+    // let writeStream = fs.createWriteStream("dev/yamlFileLines.json");
     for (const token of parser.parse(str)){
+      // writeStream.write(JSON.stringify(token,null,2))
       // console.dir(token, { depth: null })
       // console.log(token); //token is one yaml document
       // continue;
+      // WRite to file if needed
+
       for (let i = 0; i < token.value.items.length; i++) {
         const item = token.value.items[i];
         // console.log(item);
-        const {key} = item
+        const {key,value} = item
         const {source,offset} = key;
         const {line, col} = lineCounter.linePos(offset);
         console.log({source,line,col});
+        if(source === 'seven'){
+          console.log(value);
+          // there is value.type: block-seq | block-map
+          // value.items. is the way it goes down
+
+        }
 
       }
     }
