@@ -1,0 +1,44 @@
+version: "3.8"
+services:
+  host:
+    hostname: host
+    build: .
+    image: ssh_debian:latest
+    stdin_open: true
+    tty: true
+    ports:
+      - 2022:22
+    command:
+      - sh
+      - -c
+      - service ssh start;hostname;/bin/bash
+  deb1:
+    hostname: deb1
+    image: ssh_debian:latest
+  deb2:
+    hostname: deb2
+    image: ssh_debian:latest
+  deb3:
+    hostname: deb3
+    image: ssh_debian:latest
+  deb4:
+    hostname: deb4
+    image: ssh_debian:latest
+  deb5:
+    hostname: deb5
+    image: ssh_debian:latest
+  deb6:
+    hostname: deb6
+    image: ssh_debian:latest
+  deb7:
+    hostname: deb7
+    image: ssh_debian:latest
+  deb8:
+    hostname: deb8
+    image: ssh_debian:latest
+  deb9:
+    hostname: deb9
+    image: ssh_debian:latest
+  deb10:
+    hostname: deb10
+    image: ssh_debian:latest
